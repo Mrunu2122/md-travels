@@ -6,18 +6,12 @@ import asyncio
 
 app = FastAPI(title="MD Tours & Travels API", version="1.0.0")
 
-# Enhanced CORS configuration
+# Updated CORS configuration to allow all origins
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "http://localhost:3001", 
-        "http://127.0.0.1:3000",
-        "http://127.0.0.1:3001",
-        "*"  # For development - remove in production
-    ],
+    allow_origins=["*"],  # Allow all origins for development and production
     allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_methods=["*"],
     allow_headers=["*"],
 )
 
