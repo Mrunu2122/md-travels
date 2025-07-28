@@ -28,15 +28,20 @@ npx cap sync
 
 # Build Android APK
 echo "📱 Building Android APK..."
-npx cap build android --release
+npx cap build android
 
 echo "✅ APK build completed!"
-echo "📁 APK location: android/app/build/outputs/apk/release/app-release.apk"
+echo "📁 APK location: android/app/build/outputs/apk/debug/app-debug.apk"
 echo ""
 echo "📋 Next steps:"
 echo "1. Install the APK on your Android device"
 echo "2. Update the API URL in the app if needed"
 echo "3. Test all features: Dashboard, Add Trip, Expenses, Profile"
+echo ""
+echo "🔧 To generate a release APK:"
+echo "1. Open Android Studio: npx cap open android"
+echo "2. Build > Generate Signed Bundle/APK"
+echo "3. Choose APK and follow the signing process"
 echo ""
 echo "🔧 To customize the build:"
 echo "- Edit capacitor.config.ts for app settings"

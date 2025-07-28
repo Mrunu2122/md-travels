@@ -40,14 +40,35 @@ npm run build
 npx cap sync
 
 # Build Android APK
-npx cap build android --release
+npx cap build android
 ```
 
 ## 📁 APK Location
 After successful build, find your APK at:
 ```
-android/app/build/outputs/apk/release/app-release.apk
+android/app/build/outputs/apk/debug/app-debug.apk
 ```
+
+## 🔧 Generating Release APK
+
+For a signed release APK (recommended for distribution):
+
+1. **Open in Android Studio:**
+   ```bash
+   npx cap open android
+   ```
+
+2. **Generate Signed APK:**
+   - In Android Studio: `Build` → `Generate Signed Bundle/APK`
+   - Choose `APK`
+   - Create or use existing keystore
+   - Select `release` build variant
+   - Build the APK
+
+3. **Release APK Location:**
+   ```
+   android/app/build/outputs/apk/release/app-release.apk
+   ```
 
 ## ⚙️ Configuration
 
