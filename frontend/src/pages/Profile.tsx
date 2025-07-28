@@ -126,6 +126,23 @@ const Profile: React.FC = () => {
           <p className="text-sm text-gray-600 mt-2">
             Current Account: <span className="font-semibold">{driverId}</span>
           </p>
+          
+          {/* Clear Data Button */}
+          <div className="mt-4 pt-4 border-t border-gray-200">
+            <button
+              onClick={() => {
+                localStorage.clear();
+                sessionStorage.clear();
+                window.location.reload();
+              }}
+              className="w-full bg-red-500 text-white font-medium py-2 px-4 rounded-lg hover:bg-red-600 transition-all"
+            >
+              🗑️ Clear All Data & Refresh
+            </button>
+            <p className="text-xs text-gray-500 mt-1">
+              This will clear all cached data and refresh the app
+            </p>
+          </div>
         </div>
 
         {/* Profile Card */}
