@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query
 from .models import Trip, Expense, Profile
 from .db import db
 from typing import List
@@ -24,8 +24,8 @@ async def add_trip(trip: Trip):
     return trip_dict
 
 @router.get("/trips", response_model=List[Trip])
-async def get_trips():
-    return await db.trips.find().to_list(100)
+async def get_trips(driver_id: str = Query(default="default")):
+    return await db.trips.find({"driver_id": driver_id}).to_list(100)
 
 # --- Expenses ---
 @router.post("/expenses", response_model=Expense)
@@ -38,13 +38,13 @@ async def add_expense(expense: Expense):
     return expense_dict
 
 @router.get("/expenses", response_model=List[Expense])
-async def get_expenses():
-    return await db.expenses.find().to_list(100)
+async def get_expenses(driver_id: str = Query(default="default")):
+    return await db.expenses.find({"driver_id": driver_id}).to_list(100)
 
 # --- Profile ---
 @router.get("/profile", response_model=Profile)
-async def get_profile():
-    profile = await db.profile.find_one()
+async def get_profile(driver_id: str = Query(default="default")):
+    profile = await db.profile.find_one({"driver_id": driver_id})
     if not profile:
         raise HTTPException(status_code=404, detail="Profile not found")
     return profile
@@ -53,6 +53,6 @@ async def get_profile():
 async def update_profile(profile: Profile):
     profile_dict = profile.dict()
     profile_dict['rating'] = to_int(profile_dict['rating'])
-    await db.profile.delete_many({})
+    await db.profile.delete_many({"driver_id": profile_dict['driver_id']})
     await db.profile.insert_one(profile_dict)
     return profile_dict 

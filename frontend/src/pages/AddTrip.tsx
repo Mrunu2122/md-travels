@@ -60,6 +60,7 @@ const AddTrip: React.FC = () => {
       
       const tripData = {
         trip_date: tripDate,
+        driver_id: apiService.getCurrentDriverId(),
         total_trips: calculateTotalTrips(),
         working_hours: workingHours,
         earnings_ola: platforms.ola.earnings,

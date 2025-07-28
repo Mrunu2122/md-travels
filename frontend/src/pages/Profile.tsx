@@ -5,15 +5,17 @@ const Profile: React.FC = () => {
   const [profile, setProfile] = useState<ProfileType | null>(null);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(false);
+  const [driverId, setDriverId] = useState(apiService.getCurrentDriverId());
   const [formData, setFormData] = useState({
     name: '',
     car_model: '',
     rating: 5,
+    driver_id: driverId,
   });
 
   useEffect(() => {
     fetchProfile();
-  }, []);
+  }, [driverId]);
 
   const fetchProfile = async () => {
     try {
@@ -24,11 +26,13 @@ const Profile: React.FC = () => {
         name: profileData.name,
         car_model: profileData.car_model,
         rating: profileData.rating,
+        driver_id: driverId,
       });
     } catch (error) {
       console.error('Error fetching profile:', error);
       // Set default profile if none exists
       setProfile({
+        driver_id: driverId,
         name: 'Amit Sharma',
         car_model: 'Maruti Suzuki Dzire',
         rating: 5,
@@ -37,10 +41,16 @@ const Profile: React.FC = () => {
         name: 'Amit Sharma',
         car_model: 'Maruti Suzuki Dzire',
         rating: 5,
+        driver_id: driverId,
       });
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleDriverIdChange = (newDriverId: string) => {
+    apiService.setDriverId(newDriverId);
+    setDriverId(newDriverId);
   };
 
   const handleUpdateProfile = async () => {
@@ -78,6 +88,46 @@ const Profile: React.FC = () => {
       </div>
 
       <div className="px-4 py-6">
+        {/* Driver ID Selector */}
+        <div className="backdrop-blur-md bg-white/80 rounded-xl shadow-lg p-6 border border-white/20 mb-6">
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">Switch Driver Account</h2>
+          <div className="flex flex-wrap gap-2">
+            <button
+              onClick={() => handleDriverIdChange('driver1')}
+              className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                driverId === 'driver1'
+                  ? 'bg-blue-600 text-white shadow-lg'
+                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+              }`}
+            >
+              Driver 1 (You)
+            </button>
+            <button
+              onClick={() => handleDriverIdChange('driver2')}
+              className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                driverId === 'driver2'
+                  ? 'bg-blue-600 text-white shadow-lg'
+                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+              }`}
+            >
+              Driver 2 (Dad)
+            </button>
+            <button
+              onClick={() => handleDriverIdChange('driver3')}
+              className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                driverId === 'driver3'
+                  ? 'bg-blue-600 text-white shadow-lg'
+                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+              }`}
+            >
+              Driver 3
+            </button>
+          </div>
+          <p className="text-sm text-gray-600 mt-2">
+            Current Account: <span className="font-semibold">{driverId}</span>
+          </p>
+        </div>
+
         {/* Profile Card */}
         <div className="backdrop-blur-md bg-white/80 rounded-xl shadow-lg p-6 border border-white/20">
           {/* Profile Picture Placeholder */}
