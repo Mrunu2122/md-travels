@@ -22,7 +22,7 @@ const Expenses: React.FC = () => {
       
       const expenseData = {
         expense_date: expenseDate,
-        driver_id: apiService.getCurrentDriverId(),
+        driver_id: 'dad',
         fuel: fuelExpenses,
         other: otherExpenses,
       };

@@ -10,9 +10,9 @@ const api = axios.create({
   },
 });
 
-// Get driver_id from localStorage or use default
+// Get driver_id - always return 'dad' for single user
 const getDriverId = (): string => {
-  return localStorage.getItem('driver_id') || 'default';
+  return 'dad';
 };
 
 // Types for API responses - matching backend models exactly
@@ -91,15 +91,6 @@ export const apiService = {
   async healthCheck(): Promise<any> {
     const response = await api.get('/health');
     return response.data;
-  },
-
-  // Driver ID management
-  setDriverId(driver_id: string): void {
-    localStorage.setItem('driver_id', driver_id);
-  },
-
-  getCurrentDriverId(): string {
-    return getDriverId();
   },
 };
 
