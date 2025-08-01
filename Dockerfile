@@ -5,14 +5,14 @@ FROM python:3.11
 WORKDIR /app
 
 # Copy requirements first
-COPY requirements.txt .
+COPY backend/requirements.txt .
 
 # Install dependencies
 RUN python -m pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 # Copy the rest of the application
-COPY . .
+COPY backend/ .
 
 # Expose port
 EXPOSE 8000
