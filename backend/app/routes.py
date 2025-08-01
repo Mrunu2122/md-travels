@@ -24,7 +24,7 @@ async def add_trip(trip: Trip):
     return trip_dict
 
 @router.get("/trips", response_model=List[Trip])
-async def get_trips(driver_id: str = Query(default="default")):
+async def get_trips(driver_id: str = Query(default="dad")):
     return await db.trips.find({"driver_id": driver_id}).to_list(100)
 
 # --- Expenses ---
@@ -38,12 +38,12 @@ async def add_expense(expense: Expense):
     return expense_dict
 
 @router.get("/expenses", response_model=List[Expense])
-async def get_expenses(driver_id: str = Query(default="default")):
+async def get_expenses(driver_id: str = Query(default="dad")):
     return await db.expenses.find({"driver_id": driver_id}).to_list(100)
 
 # --- Profile ---
 @router.get("/profile", response_model=Profile)
-async def get_profile(driver_id: str = Query(default="default")):
+async def get_profile(driver_id: str = Query(default="dad")):
     profile = await db.profile.find_one({"driver_id": driver_id})
     if not profile:
         raise HTTPException(status_code=404, detail="Profile not found")

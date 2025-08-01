@@ -31,7 +31,7 @@ export interface Trip {
 
 export interface Expense {
   _id?: string;
-  date?: string; // Optional for backend response
+  date?: string;
   expense_date: string;
   driver_id: string;
   fuel: number;
@@ -86,12 +86,4 @@ export const apiService = {
     const response = await api.post('/profile', profileWithDriverId);
     return response.data;
   },
-
-  // Health check
-  async healthCheck(): Promise<any> {
-    const response = await api.get('/health');
-    return response.data;
-  },
-};
-
-export default api; 
+}; 

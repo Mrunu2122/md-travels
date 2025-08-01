@@ -39,10 +39,15 @@ const Dashboard: React.FC = () => {
   const fetchDashboardData = async () => {
     try {
       setLoading(true);
+      
       const [trips, expenses] = await Promise.all([
         apiService.getTrips(),
         apiService.getExpenses()
       ]);
+
+      // Debug: Log the data being fetched
+      console.log('Fetched trips:', trips);
+      console.log('Fetched expenses:', expenses);
 
       // Calculate today's data
       const today = new Date().toISOString().split('T')[0];
@@ -67,7 +72,7 @@ const Dashboard: React.FC = () => {
         netEarnings,
       });
 
-      // Prepare weekly data (last 7 days)
+      // Prepare weekly data (last 7 days) - with empty data structure
       const last7Days = Array.from({ length: 7 }, (_, i) => {
         const date = new Date();
         date.setDate(date.getDate() - i);
@@ -90,7 +95,7 @@ const Dashboard: React.FC = () => {
 
       setWeeklyData(weeklyDataPoints);
 
-      // Prepare monthly data (last 30 days)
+      // Prepare monthly data (last 30 days) - with empty data structure
       const last30Days = Array.from({ length: 30 }, (_, i) => {
         const date = new Date();
         date.setDate(date.getDate() - i);
@@ -123,6 +128,9 @@ const Dashboard: React.FC = () => {
   };
 
   useEffect(() => {
+    // Clear any cached data and force fresh fetch
+    localStorage.clear();
+    sessionStorage.clear();
     fetchDashboardData();
     // Set up polling to refresh data every 30 seconds
     const interval = setInterval(fetchDashboardData, 30000);
@@ -212,6 +220,8 @@ const Dashboard: React.FC = () => {
       >
         💬
       </button>
+
+
     </div>
   );
 };
